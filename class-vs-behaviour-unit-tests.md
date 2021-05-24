@@ -117,7 +117,7 @@ In a strictly class-based testing approach, we would start mocking Battery at th
 
 I pose that as developers it's our job to produce systems that are fast and easy to refactor without breaking functionality. And by loosely coupling tests to implementation we help ourselves achieve that.
 
-I kind of see your point, but in reality, how do we define the scope of a unit. What about databases, or external systems.
+## I kind of see your point, but in reality, how do we define the scope of a unit? What about databases, or external systems.
 
 I would loosely define a good unit as a module, which is also an overloaded term. Good examples of this could be:
 
