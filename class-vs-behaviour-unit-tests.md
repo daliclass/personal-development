@@ -1,20 +1,19 @@
 # Behavioural unit testing
 
-In this post, I will try and show the benefits of focus of testing from classes to behaviour. All references to "Testing" from this point onwards will refer to a unit test of either a class-based unit test or a behavioural based unit test. When doing some research for this I noticed there actually is a pretty even split between class-based/behavioural unit testing. I will include some sources as its a pretty interesting topic
+In this post, I will try and show the benefits of focusing testing on behavioural units instead of classes. All references to "Testing" from this point onwards will refer to a unit test of either a class/behavioural type. When doing some research for this I noticed there actually is a pretty even split between class-based/behavioural unit testing. I will include some sources as its a pretty interesting topic.
 
 ## Common characteristics of class-based testing
-Before jumping into a behavioural approach it makes sense to highlight what I see as the characteristics of class-based testing.
+Before jumping into a behavioural approach I wanted to highlight what I see as the characteristics of class-based testing.
 
 - Protects against regression
 - Provides fast feedback to assist development tasks
 - Documents the behaviour of a system in a readable way
 - Encourages less coupled code
-- *A unit test tests a single class
-- Tests cement the implementation in place making it hard to refactor.
+- Tests require refactor when the shape of the implementation changes
 
-For a long time, I was in this camp that every class should be tested. Overtime on many projects, I noticed a common pattern emerged that when requirements changed that impacted the fundamental design of a solution, then the migration to a nicer solution was a complex and error-prone task. The main reason I see for this is we can't refactor without breaking tests, meaning we have to rewrite tests and any gaps that emerge show up as regressions.
+For a long time, I was in this camp that every class should be directly tested. Over many projects, I noticed a common pattern emerges that when requirements change moving the implementation requires a partial rewrite of the test suite + the implementation changes. One of the reasons this is hard is because we are changing both the implementation and tests at the same time, which leaves code review / the developers brain as the only thing preventing regressions.
 
-Additionally to this by testing at the class level, we generally can't refactor the shape of our application without breaking tests. If you have ever been in a discussion to decide how to implement something and the test suite being mentioned as a potential reason for a workaround I would put this down to an application that either has no tests or has its structure dictated by tests.
+By testing at the class level, we generally can't refactor the shape of our application without breaking tests. If you have ever been in a design discussion and decided to implement a workaround due to the testing rework required to do it "right" then you feel the pain.
 
 ## Example: Let's look at some code
 
@@ -113,11 +112,13 @@ public class Battery {
 }
 ```
 
-In a strictly class-based testing approach, we would start mocking Battery at this point inside the MotorBike implementation. And adding additional tests for the battery implementation. This then begins making our test suite rigid around the implementation breaking when behaviour has not changed. This cements the implementation in place making it hard to refine without breaking tests.
+By Keeping testing at the MotorBike level we have the highest amount of flexibility for development in the future. We can freely change implementation without laborious refactorings of the test suite. A common concern at this point is, that our test classes are going to be huge, but this can be worked around by having multiple test classes per Unit.
 
-I pose that as developers it's our job to produce systems that are fast and easy to refactor without breaking functionality. And by loosely coupling tests to implementation we help ourselves achieve that.
+## The class based alternative
 
-## I kind of see your point, but in reality, how do we define the scope of a unit? What about databases, or external systems.
+In a strictly class-based testing approach, we would start mocking Battery at this point inside the MotorBike implementation. And add additional tests for the battery implementation. This then begins making our test suite rigid around the implementation breaking when the shape of the code changes. This is an unhelpful trait of a class based approach, which over the course of a project takes developers time and increases the speed of delivery and increasing the risk of regressions.
+
+## How do we define the scope of a unit? What about databases, or external systems.
 
 I would loosely define a good unit as a module, which is also an overloaded term. Good examples of this could be:
 
@@ -127,6 +128,7 @@ I would loosely define a good unit as a module, which is also an overloaded term
 - A PostRepository
 
 We don't want to bring in external dependencies as we still want our tests to be fast and reliable.
+
 
 ## Closing thoughts
 
