@@ -132,6 +132,8 @@ We don't want to bring in external dependencies as we still want our tests to be
 
 I hope this at least highlighted some of the merits of shifting our focus from classes to units of behaviour. With every tool I think it comes down to how we choose to use it, for instance, class tests make a lot of sense when handling a particularly tricky algorithm. However Behavioural-based tests make sense when working on broad parts of the system.
 
+I put forward that a combined approach would give us all the benefits of class based testing without the negatives of creating a system that is hard to refactor.
+
 ## Interesting reads:
 
 - https://medium.com/@stefanovskyi/unit-test-naming-conventions-dd9208eadbea
